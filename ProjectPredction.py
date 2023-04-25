@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-import joblib
+import pickle
 
 # Load the data
 df = pd.read_csv('./African projects Dataset.csv')
@@ -41,6 +41,9 @@ y_pred_labels = le.inverse_transform(y_pred)
 # Print the predicted values with class labels
 print('Predicted values:', y_pred_labels)
 
-# Save the model and the LabelEncoder
-joblib.dump(clf, 'model.joblib')
-joblib.dump(le, 'labelencoder.joblib')
+# Save the model and the LabelEncoder as pickle files
+with open('model.pkl', 'wb') as f:
+    pickle.dump(clf, f)
+
+with open('labelencoder.pkl', 'wb') as f:
+    pickle.dump(le, f)
