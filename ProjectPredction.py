@@ -2,10 +2,11 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+
 import pickle
 
 # Load the data
-df = pd.read_csv('./African projects Dataset.csv')
+df = pd.read_csv('African projects Dataset.csv')
 
 # Encode the target variable
 le = LabelEncoder()
@@ -40,6 +41,34 @@ y_pred_labels = le.inverse_transform(y_pred)
 
 # Print the predicted values with class labels
 print('Predicted values:', y_pred_labels)
+
+# Example input to test the predict() method
+input_data = {'Lawmaker': 'MINISTRY_OF_TRANSPORTATION',
+              'project_cost': 100000000,
+              'number_of_workers': 150}
+
+# Convert the input data into a dataframe
+input_df = pd.DataFrame([input_data])
+
+# One-hot encode categorical features of the input data
+input_df = pd.get_dummies(input_df)
+
+# Make sure the input data has all the columns that the training data has
+missing_cols = set(X.columns) - set(input_df.columns)
+for c in missing_cols:
+    input_df[c] = 0
+
+# Reorder the columns to match the order in the training data
+input_df = input_df[X.columns]
+
+# Make predictions on the input data
+y_pred_input = clf.predict(input_df)
+
+# Map the predicted value to class label
+y_pred_label_input = le.inverse_transform(y_pred_input)
+
+# Print the predicted value with class label for the input data
+print('Predicted value for input:', y_pred_label_input)
 
 # Save the model and the LabelEncoder as pickle files
 with open('model.pkl', 'wb') as f:
