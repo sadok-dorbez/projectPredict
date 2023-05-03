@@ -43,7 +43,7 @@ y_pred_labels = le.inverse_transform(y_pred)
 print('Predicted values:', y_pred_labels)
 
 # Example input to test the predict() method
-input_data = {'Lawmaker': 'MINISTRY_OF_TRANSPORTATION',
+input_data = {'type': 'tourism',
               'project_cost': 100000000,
               'number_of_workers': 150}
 
